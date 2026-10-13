@@ -1,0 +1,27 @@
+# 生成的补丁版 chrome.dll（几百 MB，不入库）
+out/
+
+# 原始文件备份（几百 MB，不入库）
+backups/*
+!backups/.gitkeep
+
+# 临时测试文件
+_test/
+
+# 任何二进制产物
+*.dll
+*.orig-*
+*.patched-*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

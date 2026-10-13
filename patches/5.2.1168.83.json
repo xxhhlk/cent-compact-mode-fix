@@ -1,0 +1,41 @@
+{
+  "_comment": [
+    "Cent Browser 紧凑模式重启失效 —— 二进制补丁描述。",
+    "这里只描述「补丁点在哪 + 原始指令是什么 + 要把哪个 bool 置成什么值」，",
+    "最终机器码（含两处 rel32 跳转）由 centfix.patchdef 推导，不在这里硬编码。",
+    "所有 RVA 都是相对 ImageBase 的偏移。"
+  ],
+
+  "product": "Cent Browser",
+  "product_version": "5.2.1168.83",
+  "chromium_version": "134.0.6998.136",
+  "module": "chrome.dll",
+
+  "image_base": "0x180000000",
+  "file_size": 243780096,
+
+  "sha1": {
+    "original": "ade00d3ebc2d61c7a57457d9bf56aa48e3ef9f80",
+    "patched": "495fff8cc9c246b225fc5f4bbf74378ef9415fdb"
+  },
+
+  "anchors": {
+    "_comment": "运行时校验用的锚点；换版本时一并重新定位",
+    "browserview_vtable_rva": "0xcacc430",
+    "browserview_layout_vtable_rva": "0xc84c150",
+    "browserview_layout_ptr_offset": "0x3c0",
+    "is_compact_mode_offset": "0xb8"
+  },
+
+  "patch": {
+    "description": "让 BrowserViewLayout 构造时 is_compact_mode_ 的初值由 false 变成 true",
+    "site_rva": "0x275e0d0",
+    "site_original_hex": "0f11b6a9000000",
+    "site_note": "movups xmmword ptr [rsi+0xA9], xmm6 —— 编译器把 contents_border_widget_(+0xB0) 与 is_compact_mode_(+0xB8) 合并成一次 16 字节清零，所以它同时也把 is_compact_mode_ 写成了 0",
+    "cave_rva": "0x289d0a7",
+    "cave_size": 25,
+    "cave_fill": "cc",
+    "flag_offset": "0xb8",
+    "flag_value": 1
+  }
+}
